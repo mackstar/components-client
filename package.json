@@ -1,0 +1,19 @@
+{
+  "name": "components-client",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/client.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "q": "^1.4.1",
+    "unirest": "^0.4.2"
+  },
+  "devDependencies": {
+    "chai": "^3.4.0",
+    "mocha": "^2.3.3"
+  }
+}
