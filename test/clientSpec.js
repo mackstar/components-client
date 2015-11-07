@@ -35,11 +35,11 @@ describe("Components Client", function() {
         });
 
         it("should request it with accumulated components", function() {
-            expect(unirestStub.calledWithMatch("component=component1&component=component2")).to.true;
+            expect(unirestStub.calledWithMatch("component=component1&component=component2")).to.be.true;
         });
 
         it("should request it with a brand", function() {
-            expect(unirestStub.calledWithMatch("brand=sport")).to.true;
+            expect(unirestStub.calledWithMatch("brand=sport")).to.be.true;
         });
     });
 
