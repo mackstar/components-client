@@ -18,7 +18,7 @@ describe("Components Client", function() {
             unirestStub = sinon.stub();
             unirestStub.returns({
                 end: function(callback) { 
-                    callback({body: "yoyoyo"});
+                    callback({body: { html: { 'masthead ': 'yoyoyo' }, css: 'mycss', js: 'myjs'}});
                 }
             });
             mockery.registerMock('unirest', { get: unirestStub });
@@ -40,6 +40,29 @@ describe("Components Client", function() {
         it("should request it with a brand", function() {
             client.fetch().then(function () {
                 expect(unirestStub.calledWithMatch("brand=sport")).to.true;
+                done();
+            });
+        });
+    });
+
+    describe("Rendering of API elements", function() {
+        it("should be able to access template by component", function() {
+            client.fetch().then(function () {
+                expect(client.getHtml('masthead')).to.equal('yoyoyo');
+                done();
+            });
+        });
+
+        it("should be able to access css", function() {
+            client.fetch().then(function () {
+                expect(client.getCss()).to.equal('mycss');
+                done();
+            });
+        });
+
+        it("should be able to access js", function() {
+            client.fetch().then(function () {
+                expect(client.getJs()).to.equal('myjs');
                 done();
             });
         });
