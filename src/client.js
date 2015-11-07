@@ -7,6 +7,7 @@ function Components(brand, components) {
 
   var deferred = Q.defer();
   var result;
+
   function responseHandler(response) {
     result = response.body;
     deferred.resolve();
@@ -30,8 +31,6 @@ function Components(brand, components) {
       return deferred.promise;
     }
   }
-
-
 }
 
 module.exports = Components;

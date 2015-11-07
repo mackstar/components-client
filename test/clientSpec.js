@@ -10,21 +10,10 @@ describe("Components Client", function() {
     describe("Fetching an endpoint", function() {
 
         beforeEach(function(done) {
-            mockery.enable({ 
-                useCleanCache: true,
-                warnOnReplace: false,
-                warnOnUnregistered: false
-            });
-            unirestStub = sinon.stub();
-            unirestStub.returns({
-                end: function(callback) { 
-                    callback({body: { html: { 'masthead': 'yoyoyo' }, css: 'mycss', js: 'myjs'}});
-                }
-            });
-            mockery.registerMock('unirest', { get: unirestStub });
+            setUpStubbing();
+
             var Client = require('client');
             client = new Client('sport', ['component1', 'component2']);
-
             client.fetch().then(function () {
                 done();
             });
@@ -56,5 +45,20 @@ describe("Components Client", function() {
             expect(client.getJs()).to.equal('myjs');
         });
     });
+
+    function setUpStubbing() {
+        mockery.enable({ 
+            useCleanCache: true,
+            warnOnReplace: false,
+            warnOnUnregistered: false
+        });
+        unirestStub = sinon.stub();
+        unirestStub.returns({
+            end: function(callback) { 
+                callback({body: { html: { 'masthead': 'yoyoyo' }, css: 'mycss', js: 'myjs'}});
+            }
+        });
+        mockery.registerMock('unirest', { get: unirestStub });
+    }
 
 });
