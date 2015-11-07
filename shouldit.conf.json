@@ -1,0 +1,4 @@
+{
+    "specs": "features/**/*.md",
+    "results": "mocha-output.json"
+}

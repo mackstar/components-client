@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/client.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "NODE_PATH=$NODE_PATH:./src multi='mocha-spec-json-reporter=- spec=-' mocha -R mocha-multi test/**/*.js --debug",
+    "shouldit": "./node_modules/.bin/shouldit"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,12 @@
   },
   "devDependencies": {
     "chai": "^3.4.0",
-    "mocha": "^2.3.3"
+    "isparta": "^3.5.3",
+    "mocha": "^2.3.3",
+    "mocha-multi": "^0.7.2",
+    "mocha-spec-json-reporter": "0.0.2",
+    "mockery": "^1.4.0",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
   }
 }
