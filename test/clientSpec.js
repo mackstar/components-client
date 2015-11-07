@@ -9,7 +9,7 @@ describe("Components Client", function() {
 
     describe("Fetching an endpoint", function() {
 
-        beforeEach(function() {
+        beforeEach(function(done) {
             mockery.enable({ 
                 useCleanCache: true,
                 warnOnReplace: false,
@@ -18,53 +18,42 @@ describe("Components Client", function() {
             unirestStub = sinon.stub();
             unirestStub.returns({
                 end: function(callback) { 
-                    callback({body: { html: { 'masthead ': 'yoyoyo' }, css: 'mycss', js: 'myjs'}});
+                    callback({body: { html: { 'masthead': 'yoyoyo' }, css: 'mycss', js: 'myjs'}});
                 }
             });
             mockery.registerMock('unirest', { get: unirestStub });
             var Client = require('client');
             client = new Client('sport', ['component1', 'component2']);
+
+            client.fetch().then(function () {
+                done();
+            });
         });
 
         afterEach(function() {
             mockery.disable();
         });
 
-        it("should request it with accumulated components", function(done) {
-            client.fetch().then(function () {
-                expect(unirestStub.calledWithMatch("component=component1&component=component2")).to.true;
-                done();
-            });
+        it("should request it with accumulated components", function() {
+            expect(unirestStub.calledWithMatch("component=component1&component=component2")).to.true;
         });
 
         it("should request it with a brand", function() {
-            client.fetch().then(function () {
-                expect(unirestStub.calledWithMatch("brand=sport")).to.true;
-                done();
-            });
+            expect(unirestStub.calledWithMatch("brand=sport")).to.true;
         });
     });
 
     describe("Rendering of API elements", function() {
         it("should be able to access template by component", function() {
-            client.fetch().then(function () {
-                expect(client.getHtml('masthead')).to.equal('yoyoyo');
-                done();
-            });
+            expect(client.getHtml('masthead')).to.equal('yoyoyo');
         });
 
         it("should be able to access css", function() {
-            client.fetch().then(function () {
-                expect(client.getCss()).to.equal('mycss');
-                done();
-            });
+            expect(client.getCss()).to.equal('mycss');
         });
 
         it("should be able to access js", function() {
-            client.fetch().then(function () {
-                expect(client.getJs()).to.equal('myjs');
-                done();
-            });
+            expect(client.getJs()).to.equal('myjs');
         });
     });
 
